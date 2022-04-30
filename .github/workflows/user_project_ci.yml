@@ -22,9 +22,6 @@ jobs:
       - name: Export PDK ROOT
         run: echo "PDK_ROOT=/home/runner/work/pdk" >> $GITHUB_ENV
 
-      - name: Export PDK
-        run: echo "PDK=sky130A" >> $GITHUB_ENV
-
       - name: Export OPENLANE ROOT
         run: echo "OPENLANE_ROOT=/home/runner/work/caravel_user_project/openlane" >> $GITHUB_ENV
 
@@ -77,7 +74,7 @@ jobs:
         run: |
           sudo mkdir -p ${{ env.PDK_ROOT }}/sky130A
           sudo chown -R $USER:$USER ${{ env.PDK_ROOT }}
-          tar -xf /tmp/sky130A.tar -C $PDK_ROOT/sky130A .
+          tar -xf /tmp/sky130A.tar -C $PDKPATH .
       - name: Run MPW-Precheck
         run: |
           export INPUT_DIRECTORY=$(pwd)
@@ -118,6 +115,12 @@ jobs:
       - name: Export PDK ROOT
         run: echo "PDK_ROOT=/home/runner/work/pdk" >> $GITHUB_ENV
 
+      - name: Export PDK
+        run: echo "PDK=sky130A" >> $GITHUB_ENV
+
+      - name: Export PDK PATH
+        run: echo "PDKPATH=/home/runner/work/pdk/sky130A" >> $GITHUB_ENV
+
       - name: Export OPENLANE ROOT
         run: echo "OPENLANE_ROOT=/home/runner/work/caravel_user_project/openlane" >> $GITHUB_ENV
 
@@ -129,9 +132,9 @@ jobs:
 
       - name: Unpack PDK Tarball
         run: |
-          sudo mkdir -p ${{ env.PDK_ROOT }}/sky130A
-          sudo chown -R $USER:$USER ${{ env.PDK_ROOT }}
-          tar -xf /tmp/sky130A.tar -C $PDK_ROOT/sky130A .
+          sudo mkdir -p ${{ env.PDKPATH }}
+          sudo chown -R $USER:$USER ${{ env.PDKPATH }}
+          tar -xf /tmp/sky130A.tar -C $PDKPATH .
 
       - name: Install dependencies
         run: |
